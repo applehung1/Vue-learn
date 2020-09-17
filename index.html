@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>Vue Tutorial</title>
+        <script src="./js/vue.js"></script>
+    </head>
+    <body>       
+        
+        <h4>console</h4>
+        <div id="numberButton">
+            <button value="5">5</button>
+            <button value="10">10</button>
+            <button value="15">15</button>
+          </div> 
+
+        <h4>bands</h4>
+        <div id= app>           
+                <div v-for="(band, $index, newBand) in bands"> <!--must add variables in v-for-->
+                    <h1>name: {{ band.name }} </h1>
+                    <h3>origin: {{ band.origin }}</h3>
+                    <img :src="band.image" width= "200" />
+                    {{ band.similar }} - {{ $index }}   
+                    <input v-model="newBand" placeholder="Add Artist here:)"/>
+                    <button v-on:click="addBand($index, newBand)">Add Artist</button>                                   
+                    <div v-html="band.test"></div>
+                </div>
+        </div>
+
+        <h4>Backstreet boys</h4>
+        <div id= app2>
+            <input type="checkbox" id="nick" value="Nick" v-model="checkednames">
+            <label for="nick">Nick</label>
+            <input type="checkbox" id="brian" value="Brian" v-model="checkednames">
+            <label for="brian">Brian</label>
+
+        <p>Backstreet boys are: {{ checkednames }}</p>
+        </div>
+
+        <h4>My favorite</h4>
+        <div id="app3">
+            <input type="radio" id="aj" value="AJ" v-model="picked">
+            <label for="aj">AJ</label>
+            <input type="radio" id="howie" value="Howie" v-model="picked">
+            <label for="howie">Howie</label>
+            <p>My favorite one: {{ picked }}</p>
+        </div>
+        <script>
+
+        (function() {
+         var numberButton = document.getElementById("numberButton");
+         numberButton.addEventListener("click", catchNumber, false);
+
+         function catchNumber(event) {
+           console.log(event);
+          event = event.target.value;
+           console.log(event);
+         }
+        })();
+
+        function varLion () {
+            var lion = "獅子";
+            if(true) {
+                var lion="猴子";
+            }
+            console.log("呼叫", lion);
+        }
+        varLion ();
+
+        for( var i = 0; i < 10; i++){
+            console.log(i);
+            setTimeout(function(){
+                console.log("執行第"+i+"次");
+            }, 10)
+        }
+
+            new Vue({
+                el: '#app',
+                data: {
+                    bands: [
+                        { name: "Backstreet boys", test: "<a href='https://dotblogs.com.tw/shadow/2019/01/16/082531/'>click</a>", origin: "USA", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Backstreet_Boys_2019_by_Glenn_Francis.jpg/800px-Backstreet_Boys_2019_by_Glenn_Francis.jpg", similar: "NSYNC, Maroon5"},
+                        { name: "Westlife",test:"<a href='https://dotblogs.com.tw/shadow/2019/01/16/082531/'>click</a>", origin: "UK", image: "./wei3.jpg", similar: "Jessie J"}
+                    ]
+                },
+                methods: {
+                    addBand: function (index, newBand) {
+                        this.bands[index].similar = this.bands[index].similar + ", " + newBand
+                    }
+                }
+            });
+            
+            new Vue({
+                el:'#app2',
+                data: {
+                    checkednames: []
+                }
+            })
+
+            new Vue({
+                el: '#app3',
+                data: {
+                    picked: ''
+                }
+            })
+            
+        </script>
+    </body>
+</html>
